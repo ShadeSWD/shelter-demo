@@ -8,6 +8,7 @@ class DogsListView(ListView):
     model = Dog
     template_name = "dogs/dogs.html"
     context_object_name = 'dogs'
+    extra_context = {'title': 'Our dogs'}
     queryset = Dog.objects.all()
 
 
@@ -16,3 +17,21 @@ class BreedsListView(ListView):
     template_name = "dogs/breeds.html"
     context_object_name = 'breeds'
     queryset = Breed.objects.all()
+
+
+class BreedDetailView(DetailView):
+    model = Breed
+    template_name = "dogs/breed.html"
+    context_object_name = 'breed'
+
+
+class BreedDogsListView(ListView):
+    model = Dog
+    template_name = "dogs/dogs.html"
+    context_object_name = 'dogs'
+    extra_context = {'title': ''}
+
+    def get_context_data(self, **kwargs):
+        breed = Breed.objects.get(pk=self.kwargs['pk'])
+        context = {'title': breed.name, 'dogs': Dog.objects.filter(breed_id=self.kwargs['pk'])}
+        return context

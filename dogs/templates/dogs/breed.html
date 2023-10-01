@@ -1,0 +1,40 @@
+{% extends 'dogs/base.html' %}
+{% load custom_tags %}
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{ breed.name | title }}</h1>
+  </div>
+
+  <div class="container">
+    <div class="row text-center">
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">{{ breed.name | title }}</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+            <li>{{ breed.description }}</li>
+          </ul>
+          <div class="row text-center">
+            <div class="col-4">
+              <a class="btn btn-lg btn-block btn-outline-primary"
+                 href="/dogs/breeds/{{ breed.pk }}/update/" role="button">Update</a>
+            </div>
+            <div class="col-4">
+              <a class="btn btn-lg btn-block btn-outline-danger"
+                 href="/dogs/breeds/{{ breed.pk }}/delete/" role="button">Delete</a>
+            </div>
+            <div class="col-4">
+              <a class="btn btn-lg btn-block btn-outline-primary"
+                 href="/dogs/breeds/{{ breed.pk }}/dogs/" role="button">View dogs</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
