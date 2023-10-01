@@ -17,7 +17,9 @@ class Breed(models.Model):
 
 
 class Dog(models.Model):
-    SEX_TYPES = ((0, 'Male'), (1, 'Female'))
+    MALE = 0
+    FEMALE = 1
+    SEX_TYPES = ((MALE, 'Male'), (FEMALE, 'Female'))
 
     name = models.CharField(max_length=50, verbose_name='Dog name')
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE, verbose_name='Breed')
