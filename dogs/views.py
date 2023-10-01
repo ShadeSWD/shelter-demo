@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from dogs.models import Dog, Breed
+from dogs.forms import DogForm, BreedForm
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 class DogsListView(ListView):
@@ -16,6 +18,17 @@ class DogDetailView(DetailView):
     model = Dog
     template_name = "dogs/dog.html"
     context_object_name = 'dog'
+
+
+class DogCreateView(CreateView):
+    model = Dog
+    form_class = DogForm
+    success_url = '/dogs'
+
+    def form_valid(self, form):
+        new_dog = form.save()
+        new_dog.save()
+        return super().form_valid(form)
 
 
 class BreedsListView(ListView):
