@@ -12,6 +12,12 @@ class DogsListView(ListView):
     queryset = Dog.objects.all()
 
 
+class DogDetailView(DetailView):
+    model = Dog
+    template_name = "dogs/dog.html"
+    context_object_name = 'dog'
+
+
 class BreedsListView(ListView):
     model = Breed
     template_name = "dogs/breeds.html"
