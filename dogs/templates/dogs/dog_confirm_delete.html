@@ -1,0 +1,33 @@
+{% extends 'dogs/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            {% if object %}
+                                Delete {{ object }}
+                            {% else %}
+                                Delete dog
+                            {% endif %}
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {% if object %}
+                                <p>Are you sure to delete {{ object }}?</p>
+                            {% else %}
+                                <p>Are you sure to delete this dog?</p>
+                            {% endif %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <a href="{% url 'dogs:dogs_list' %}" class="btn btn-secondary">Back</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}tml>

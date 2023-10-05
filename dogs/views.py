@@ -1,9 +1,9 @@
-from django.shortcuts import render
 from dogs.models import Dog, Breed
 from dogs.forms import DogForm, BreedForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.shortcuts import get_object_or_404
 
 
 class DogsListView(ListView):
@@ -29,6 +29,30 @@ class DogCreateView(CreateView):
         new_dog = form.save()
         new_dog.save()
         return super().form_valid(form)
+
+
+class DogUpdateView(UpdateView):
+    model = Dog
+    form_class = DogForm
+
+    def form_valid(self, form):
+        if form.is_valid():
+            new_dog = form.save()
+            new_dog.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('dogs:dogs_detail', args=[self.kwargs.get('pk')])
+
+
+class DogDeleteView(DeleteView):
+    model = Dog
+    context_object_name = 'dog'
+    success_url = reverse_lazy("dogs:dogs_list")
+
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Dog, pk=pk)
 
 
 class BreedsListView(ListView):
