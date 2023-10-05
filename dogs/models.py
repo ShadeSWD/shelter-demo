@@ -17,13 +17,13 @@ class Breed(models.Model):
 
 
 class Dog(models.Model):
-    MALE = 0
-    FEMALE = 1
+    MALE = 'male'
+    FEMALE = 'female'
     SEX_TYPES = ((MALE, 'Male'), (FEMALE, 'Female'))
 
     name = models.CharField(max_length=50, verbose_name='Dog name')
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE, verbose_name='Breed')
-    sex = models.BooleanField(choices=SEX_TYPES)
+    sex = models.CharField(choices=SEX_TYPES, max_length=6)
 
     photo = models.ImageField(upload_to='dogs/', **NULLABLE, verbose_name='Photo')
     birth_day = models.DateField(**NULLABLE, verbose_name='Date of birth')
